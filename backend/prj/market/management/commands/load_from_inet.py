@@ -8,8 +8,8 @@ from django.core.files import File
 import shutil
 from prj.settings import DATA_DIR, BASE_DIR
 
-# CURRENT_DATA_DIR = 'init_data'
-# CURRENT_DATA_DIR_PATH = fr'{BASE_DIR[:-3]}\{CURRENT_DATA_DIR}'                       
+CURRENT_DATA_DIR = 'media'
+CURRENT_DATA_DIR_PATH = fr'{BASE_DIR[:-3]}\{CURRENT_DATA_DIR}'                       
 # CURRENT_FILE_NAME = 'price.xlsx'
 # current_path = f'{CURRENT_DATA_DIR_PATH}\\{CURRENT_FILE_NAME}'
 
@@ -19,18 +19,33 @@ class Command(BaseCommand):
         print('Clearind DB')
         Category.objects.all().delete()
         Product.objects.all().delete()
-        # shutil.rmtree('%s\media' % BASE_DIR)
-        URL= 'https://www.atbmarket.com'
-        # print('Start importing from %s' % URL)
+        try:
+            shutil.rmtree('%s\media' % BASE_DIR)
+        except:
+            pass    
+        URL= 'https://prime-food.com.ua/uk/'
+        print('Start importing from %s' % URL)
         rez= requests.get(URL, verify=False)
         soup = BeautifulSoup(rez.text, 'html.parser')
-        content = soup.find('div', {'class':'home-categories__row'})
-        print(content)
+        content = soup.find('div', {'class':'main_grid'})
         
-        # home-categories__img
-        # for img in content.find_all('img',{'class':'home-categories__row'}):
-        #     print(img)
-        #     break
+        
+        for img in content.find_all('img'):
+            c = Category()
+            c.name = img.get('alt')
+            img_url = 'https://prime-food.com.ua/%s' % img.get('src')
+            # img_url = img.get('src')
+            img_response = requests.get(img_url, stream=True, verify=False)
+            # print(img_url)
+            with open('tmp.png', 'wb') as out_file:
+                shutil.copyfileobj(img_response.raw, out_file)
+            with open('%s/tmp.png' % BASE_DIR, 'rb') as img_file:
+                c.image.save('cat.png', File(img_file), save=True)
+            c.save()
+            print('Saving ...%s' % c.name)
+            
+            
+            
 
 
         

@@ -37,7 +37,10 @@ class Category(models.Model):
     
     @property
     def image_tag(self):
-        return mark_safe('<img src="%s"/>' %self.image.url)
+        try:
+            return mark_safe('<img src="%s"/>' %self.image.url)
+        except:
+            return 'None'
 
     class Meta:
         verbose_name = 'Category'
