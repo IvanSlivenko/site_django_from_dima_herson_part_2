@@ -1,0 +1,2 @@
+# site_django_from_dima_herson_part_2
+site_django_from_dima_herson_part_2
