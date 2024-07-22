@@ -1,0 +1,219 @@
+1
+mkdir backend
+
+2 
+cd backend
+
+3
+python -m venv venv
+
+4
+venv\Scripts\activate
+
+5
+add reguirements.txt
+
+6
+pip install -r requirements.txt
+
+7
+add folder bin in backend
+add file run.bat
+
+
+
+8
+django-admin startproject prj
+
+9
+cd  backend
+.\bin\run.bat
+
+runserver ==
+(venv) D:\GitHub\site_django_from_dima_herson\backend>.\bin\run.bat
+
+10
+cd prj
+manage.py migrate
+
+11
+
+cd prj
+python manage.py createsuperuser
+
+admin
+umanproger@ukr.net
+admin
+
+
+12
+cd prj
+python manage.py startapp market
+
+13
+prj-> settings-> 
+INSTALLED_APPS
+add market
+
+14
+pip install pillow
+
+15
+create model
+prj-> market-> models.py
+
+16
+register model
+prj-> market-> admin.py
+
+17
+create file xlsx
+
+pip install openpyxl==3.1.5
+
+18
+prj -> prj -> settings.py
+DATA_DIR = os.path.join(BASE_DIR,'../init_data'),
+
+19
+in app market create folder management\commands
+in folder management past file __init__.py
+in folder commands past file __init__.py
+
+in folder commands create file load_from_exel.py
+
+pip install pandas
+
+https://docs.djangoproject.com/en/3.0/howto/custom-management-commands/
+
+(venv) D:\GitHub\site_django_from_dima_herson\backend\prj>python manage.py load_from_excel
+
+python manage.py load_from_excel
+
+objects - менеджер моделі
+
+Category.objects.all().delete() - видаляємо всі моделі
+
+20
+swagger
+https://github.com/axnsan12/drf-yasg
+
+in prj-> settings->
+INSTALLED_APPS :
+add
+drf-yasg
+
+21
+
+delete file views.py in market
+create folder views in app market
+create file category.py in folder views
+
+===========================================
+----------------------------------------------------------------------- Part 1
+https://www.youtube.com/watch?v=0VN_tXse_ZU  
+
+----------------------------------------------------------------------- Part 2
+https://youtu.be/XG-99CTkWiM
+
+----------------------------------------------------------------------- Part 3
+https://youtu.be/q_YcW6vBVYU?list=PLHdxbzuwrHdjXrPC4XxV458IioEvm7k8s
+
+
+----------------------------------------------------------------------- Part 4
+
+https://youtu.be/PMhjHiwRHbg?list=PLHdxbzuwrHdjXrPC4XxV458IioEvm7k8s
+
+----------------------------------------------------------------------- Part 5
+swagger
+https://youtu.be/vpG0loF_h3s?list=PLHdxbzuwrHdjXrPC4XxV458IioEvm7k8s
+
+https://swagger.io/
+
+----------------------------------------------------------------------- Part 6 (websocet)
+channels
+https://youtu.be/HHzWDXjE5To?list=PLHdxbzuwrHdjXrPC4XxV458IioEvm7k8s
+
+https://channels.readthedocs.io/en/latest/
+
+22
+in settings.py
+add
+
+ASGI_APPLICATION = "market.ws_route_app.application"
+
+23
+create folder in folder prj - templates
+in folder templates create file index.html
+in prj-> settings-> TEMPLATES -> 'DIRS' : [os.path.join(BASE_DIR, 'templates')]
+
+https://www.sitepoint.com/a-basic-html5-template/
+
+24
+-----------------------------------------------   jquery
+https://releases.jquery.com/
+
+search word minified 
+
+respons ==
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous">
+</script>
+
+add this code in head index.html
+
+25
+in app market create file consumer.py
+
+---------------------------------------------------------- Part 7
+
+https://youtu.be/ACmBf64P8A8?list=PLHdxbzuwrHdjXrPC4XxV458IioEvm7k8s
+
+26
+market-> views-> create file product.py
+
+27 
+drf paginator
+https://www.django-rest-framework.org/api-guide/pagination/
+
+in prj->settings.py -> add 
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10
+}
+
+
+11 : 08
+
+--------------------------------------------------------- Part 8 import goods 
+28
+market->models.py
+model category
+add
+field == image
+
+29
+
+prj->settings-> 
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL =     '/media/'
+
+30
+
+prj 
+add
+folder media
+
+31
+(venv) D:\GitHub\site_django_from_dima_herson_part_2\backend\prj>python manage.py load_from_inet
+
+
+https://youtu.be/ELrSLQOW_og?list=PLHdxbzuwrHdjXrPC4XxV458IioEvm7k8s
+
+15 : 09
+
+===========================================

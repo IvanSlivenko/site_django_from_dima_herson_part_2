@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        {% comment %} <meta name="viewport" content="width=device-width, initial-scale=1"> {% endcomment %}
+        <title>index page</title>
+        {% comment %} <link rel="stylesheet" href="styles.css"> {% endcomment %}
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous">
+        </script>
+    </head>
+
+    <body>
+        <button id="connect_button">Connect with socket</button>
+        <input type="text" id="message_text"/>
+        <button id="send_message_button">Send message to server by web-socket</button>
+        <script>
+            var ws;
+            $('#connect_button').click(function(){
+               ws = new WebSocket('ws://localhost:8000/market');
+               ws.onmessage = function(event){
+                    console.log(event.data);
+               }
+            });
+
+            $('#send_message_button').click(function(){
+                var message = $('#message_text').val();
+                ws.send(JSON.stringify({"message": message}));
+                $('#message_text').val('Ваш текст відправлено');
+
+             });
+        </script>
+    </body>
+
+</html>
