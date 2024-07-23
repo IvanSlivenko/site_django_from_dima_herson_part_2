@@ -38,13 +38,32 @@ class Category(models.Model):
     @property
     def image_tag(self):
         try:
-            return mark_safe('<img src="%s"/>' %self.image.url)
+            return mark_safe('<img src="%s"/>' % self.image.url)
         except:
             return 'None'
 
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categorys'
+
+class SubCategory(models.Model):
+    name = models.CharField(max_length=250, default='')
+    image = models.ImageField(upload_to='subcategory', null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+    
+    @property
+    def image_tag(self):
+        try:
+            return mark_safe('<img src="%s"/>' % self.image.url)
+        except:
+            return 'None'
+    class Meta:
+        verbose_name = 'SubCategory'
+        verbose_name_plural = 'SubCategorys'
+
 
 
 class Product(models.Model):
@@ -53,9 +72,17 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True
     )
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return '%s (%s)' % (self.name, self.category)
+        return '%s (%s) (%s)' % (self.name, self.category, self.subcategory)
+    
+    @property
+    def image_tag(self):
+        try:
+            return mark_safe('<img src="%s"/>' % self.image.url)
+        except:
+            return 'None'
     
     class Meta:
         verbose_name = 'Product'
