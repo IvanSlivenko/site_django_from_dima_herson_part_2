@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
+from image_cropping.fields import ImageRatioField, ImageCropField
+from easy_thumbnails.files import get_thumbnailer
+
+from prj.settings import BASE_URL
 
 
 class Provider(User):
@@ -30,7 +34,9 @@ class Consumer(User):
 
 class Category(models.Model):
     name = models.CharField(max_length=250, default="")
-    image = models.ImageField(upload_to='category', null=True, blank=True)
+    # image = models.ImageField(upload_to='category', null=True, blank=True)
+    image = ImageCropField(upload_to='category', null=True, blank=True)
+    cropping = ImageRatioField('image','100x100')
 
     def __str__(self):
         return self.name
@@ -42,14 +48,25 @@ class Category(models.Model):
         except:
             return 'None'
 
+    @property
+    def get_small_image(self):
+        return mark_safe('<img src="%s"/>' % get_thumbnailer(self.image).get_thumbnail({
+          'size': (100, 100) ,
+          'box': self.cropping,
+          'crop': 'smart',  
+        }).url)
+    
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categorys'
 
 class SubCategory(models.Model):
     name = models.CharField(max_length=250, default='')
-    image = models.ImageField(upload_to='subcategory', null=True, blank=True)
+    # image = models.ImageField(upload_to='subcategory', null=True, blank=True)
+    image = ImageCropField(upload_to='subcategory', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    cropping = ImageRatioField('image','100x100')
+    
 
     def __str__(self):
         return self.name
@@ -60,20 +77,46 @@ class SubCategory(models.Model):
             return mark_safe('<img src="%s"/>' % self.image.url)
         except:
             return 'None'
+    @property
+    def get_small_image(self):
+        return mark_safe('<img src="%s"/>' % get_thumbnailer(self.image).get_thumbnail({
+          'size': (100, 100) ,
+          'box': self.cropping,
+          'crop': 'smart',  
+        }).url)
+
     class Meta:
         verbose_name = 'SubCategory'
         verbose_name_plural = 'SubCategorys'
 
+class InStock(models.Model):
 
+    STATUS = (
+        
+        ('yes', 'yes'),
+        ('no','no'),
+        ('toOrder','toOrder'),
+    )
+    status = models.CharField(max_length=10, default='toOrder', choices=STATUS)
+
+    def __str__(self):
+        return self.status
+    
+    class Meta:
+        verbose_name = 'InStock'
+        verbose_name_plural = 'InStocks'
 
 class Product(models.Model):
     name = models.CharField(max_length=250, default="")
-    image = models.ImageField(upload_to="product", null=True, blank=True)
+    # image = models.ImageField(upload_to="product", null=True, blank=True)
+    image = ImageCropField(upload_to="product", null=True, blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True
     )
     subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True, blank=True)
-
+    cropping = ImageRatioField('image','100x100')
+    in_stock = models.ForeignKey(InStock, on_delete=models.SET_NULL, null=True, blank=True)
+    
     def __str__(self):
         return '%s (%s) (%s)' % (self.name, self.category, self.subcategory)
     
@@ -83,7 +126,18 @@ class Product(models.Model):
             return mark_safe('<img src="%s"/>' % self.image.url)
         except:
             return 'None'
+    @property
+    def get_small_image(self):
+        return mark_safe('<img src="%s"/>' % self.get_small_image_url)
     
+    @property
+    def get_small_image_url(self):
+        return BASE_URL+get_thumbnailer(self.image).get_thumbnail({
+          'size': (100, 100) ,
+          'box': self.cropping,
+          'crop': 'smart',  
+        }).url
+
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'

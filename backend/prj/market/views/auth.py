@@ -30,6 +30,6 @@ class AuthView(APIView):
     
 from rest_framework.decorators import api_view
 
-@api_view()
-def hello(request):
-    return Response({'message' : 'hello'})
+# @api_view()
+# def hello(request):
+#     return Response({'message' : 'hello'})

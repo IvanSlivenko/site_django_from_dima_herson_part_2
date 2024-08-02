@@ -41,8 +41,8 @@ urlpatterns = [
     path('', index),
     path('admin/', admin.site.urls),
     path('v1/', include([
-        path('generic/', include(router.urls)),
-        path('market/', include('market.urls')),
+        path('viewsets/', include(router.urls)),
+        path('generic/', include('market.urls')),
         
 
     ])),

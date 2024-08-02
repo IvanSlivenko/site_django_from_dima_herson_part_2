@@ -13,5 +13,6 @@ openpyxl==3.1.5
 pandas==2.2.2
 bs4
 requests
-
+django-image-cropping==1.7
+easy-thumbnails==2.8.5
 

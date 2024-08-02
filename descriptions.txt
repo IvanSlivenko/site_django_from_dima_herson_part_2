@@ -211,9 +211,82 @@ folder media
 31
 (venv) D:\GitHub\site_django_from_dima_herson_part_2\backend\prj>python manage.py load_from_inet
 
+32
+pip  install  django-image-cropping
+pip install easy-thumbnails
+
+prj->settings-> 
+
+INSTALLED_APPS
+add  :
+'easy_thumbnails',
+'image_cropping'
+
+ImageCropField in images in models.py
+
+
 
 https://youtu.be/ELrSLQOW_og?list=PLHdxbzuwrHdjXrPC4XxV458IioEvm7k8s
 
-22 : 14
+
+--------------------------------------------------------------------------- Part 9
+https://youtu.be/myCm4MfVwQc?list=PLHdxbzuwrHdjXrPC4XxV458IioEvm7k8s
+
+33
+pip install django-filter
+
+in prj-> settings-> 
+INSTALLED_APPS
+add  :
+'django_filters',
+
+in   market-> views-> product.py 
+add :
+filterset_fields = ('category', 'subcategory')
+
+34
+in market 
+addfile
+filters.py
+
+--------------------------------------------------------------------------- Part 10 Angular and Flex Layout  
+https://youtu.be/y7g5MeGuBSE
+
+Chat GPT about Angular
+
+
+open git bash
+
+Vanya@DESKTOP-Q0R53E4 MINGW64 /d/GitHub/site_django_from_dima_herson_part_2/frontend (main)
+$ ng new ng-prj --no-standalone --routing --style=scss
+
+Vanya@DESKTOP-Q0R53E4 MINGW64 /d/GitHub/site_django_from_dima_herson_part_2/frontend/ng-prj (main)
+$ ng serve
+
+http://localhost:4200/
+
+Vanya@DESKTOP-Q0R53E4 MINGW64 /d/GitHub/site_django_from_dima_herson_part_2/frontend/ng-prj (main)
+$ npm i -s @angular/flex-layout @angular/cdk
+
+
+ng add @angular/material --skip-confirmation
+
+angular.json->
+"assets": [
+              {
+                "glob": "**/*",
+                "input": "public",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              }
+            ],
+
+
+
+18 : 36
 
 ===========================================
