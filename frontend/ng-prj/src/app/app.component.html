@@ -1,6 +1,26 @@
 <div fxLayout="column"  id="app-content">
-    <div id="app-header" fxFlex="60px">
-        <img src="assets/images/globus.webp" alt="Logo" class="logo_img" width="50px">  
+    <div 
+        id="app-header" 
+        fxFlex="60px" 
+        fxLayout="row" 
+        fxLayoutAlign="start center"
+        fxLayoutGap="10px"
+    >
+        <img src="assets/images/globus.webp" alt="Logo" class="logo_img" width="40px">
+        <span class="logo-title">Market</span> 
+        <div 
+            class="button-container"
+            
+            fxFlex="100"
+            fxLayout="row"
+            fxLayoutAlign="end center"
+            fxLayoutGap="10px"
+        > 
+            <button mat-flat-button color="primary">Primary</button>
+            <button mat-flat-button color="accent">Accent</button>
+            <button mat-flat-button color="warn">Warn</button>
+        </div>
+        
     </div>
     <div id="app-center" fxFlex="100">center</div>
     <div id="app-footer" fxFlex="40px">footer</div>
